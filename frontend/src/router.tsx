@@ -28,8 +28,10 @@ export const getRouter = () => {
     },
   });
 
+  const rawBase = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
   const router = createRouter({
     routeTree,
+    basepath: rawBase || "/",
     context: { queryClient },
     scrollRestoration: true,
     // Lets Query own freshness; set caching defaults on the QueryClient, not the router.

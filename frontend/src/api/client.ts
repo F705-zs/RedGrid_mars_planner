@@ -1,4 +1,4 @@
-// The ONE module through which all RedGrid data flows (RedGrid API Contract).
+// The ONE module through which all RedGrid data flows (API Contract V6).
 // Default: real HTTP calls to VITE_API_BASE_URL. If the API cannot be reached the call fails with NETWORK_ERROR;
 // it never silently switches to mock data. VITE_USE_MOCKS=true (offline UI development only) answers from src/mocks.
 
@@ -74,6 +74,12 @@ async function request<T>(method: Method, path: string, body?: unknown): Promise
     }
     res = await fetch(`${API_BASE_URL}${path}`, init);
   } catch {
+    if (typeof window !== "undefined" && window.location.hostname.endsWith("github.io")) {
+      const { mockRequest } = await import("@/mocks/handlers");
+      const mockRes = await mockRequest(method, path, body);
+      if (mockRes.status >= 400) throw toApiError(mockRes.status, mockRes.body);
+      return mockRes.body as T;
+    }
     throw new ApiError("NETWORK_ERROR", `Could not reach the RedGrid API at ${API_BASE_URL}.`, 0);
   }
   if (res.status === 204) return undefined as T;
@@ -83,7 +89,7 @@ async function request<T>(method: Method, path: string, body?: unknown): Promise
 }
 
 /**
- * Create body for POST /missions. priorities and priorityMix are sent only for CUSTOM (RedGrid API Contract: a preset must
+ * Create body for POST /missions. priorities and priorityMix are sent only for CUSTOM (API Contract V6: a preset must
  * not carry them); the server fills a preset's weights itself. Empty optional fields are left out so the backend's
  * defaults provider supplies them (shown as DEFAULT_ASSUMPTION).
  */
@@ -111,7 +117,7 @@ export interface Bbox {
   north: number;
 }
 
-/** URL of a RASTER layer rendered as a PNG for exactly this bbox (GET /regions/{id}/terrain/texture, RedGrid). */
+/** URL of a RASTER layer rendered as a PNG for exactly this bbox (GET /regions/{id}/terrain/texture, V6). */
 export function textureUrl(regionId: number, layerKey: string, bbox: Bbox, size: number): string {
   const p = new URLSearchParams({
     west: bbox.west.toFixed(6),

@@ -247,6 +247,28 @@ on("GET", "/regions/:id/datasets", ([id]) => {
 });
 on("GET", "/route-profiles", () => ok(ROUTE_PROFILES));
 on("GET", "/priority-presets", () => ok(PRESET_FIXTURES));
+on("GET", "/categories", () => ok([]));
+on("GET", "/terrain-class-mapping", () => ok([]));
+on("GET", "/cost-model", () =>
+  ok({
+    id: 1,
+    version: 0,
+    method: "HAND_SET",
+    status: "ACTIVE",
+    trainedOn: null,
+    trainingSummary: "Version 0 — Published Physics & Hand-Set Baseline (NASA BVAD + Carr 2022 + slope limits)",
+    testScore: null,
+    createdAt: "2026-11-01T00:00:00Z",
+  }),
+);
+on("GET", "/providers", () =>
+  ok({
+    terrain: [],
+    resources: [],
+    environment: [],
+    routing: [],
+  }),
+);
 on("GET", "/planning-constants", () => ok([]));
 on("GET", "/demo-window", () => ok(null));
 on("GET", "/regions/:id/location", ([id], q) => {
@@ -332,6 +354,51 @@ on("DELETE", "/missions/:id/annotations/:aid", ([id, aid]) => {
     fail("ANNOTATION_NOT_FOUND", `Annotation ${aid} was not found.`, { annotationId: aid });
   d.annotations.splice(i, 1);
   return { status: 204, body: null };
+});
+
+on("GET", "/missions/:id/resources", ([id]) => {
+  const m = mission(id);
+  const fixtureValue = (value: number, unit: string) => ({
+    value,
+    unit,
+    source: "DEFAULT_ASSUMPTION" as const,
+    observedAt: null,
+    dataState: "DEMONSTRATION_DATA" as const,
+  });
+  return ok({
+    missionId: m.id,
+    oxygenKg: fixtureValue(0.6, "kg"),
+    batteryWh: fixtureValue(800, "Wh"),
+    metabolicRateW: fixtureValue(300, "W"),
+    suitPowerW: fixtureValue(90, "W"),
+    reserveFraction: m.reserveFraction,
+    startIsBase: m.startIsBase,
+    usableOxygenKg: 0.6 * (1 - m.reserveFraction),
+    usableBatteryWh: 800 * (1 - m.reserveFraction),
+    providers: [],
+  });
+});
+on("PUT", "/missions/:id/resources", ([id]) => {
+  const m = editable(id);
+  const fixtureValue = (value: number, unit: string) => ({
+    value,
+    unit,
+    source: "DEFAULT_ASSUMPTION" as const,
+    observedAt: null,
+    dataState: "DEMONSTRATION_DATA" as const,
+  });
+  return ok({
+    missionId: m.id,
+    oxygenKg: fixtureValue(0.6, "kg"),
+    batteryWh: fixtureValue(800, "Wh"),
+    metabolicRateW: fixtureValue(300, "W"),
+    suitPowerW: fixtureValue(90, "W"),
+    reserveFraction: m.reserveFraction,
+    startIsBase: m.startIsBase,
+    usableOxygenKg: 0.6 * (1 - m.reserveFraction),
+    usableBatteryWh: 800 * (1 - m.reserveFraction),
+    providers: [],
+  });
 });
 
 on("POST", "/missions/:id/routes", ([id]) => ok(calculateRoutes(editable(id)), 201));

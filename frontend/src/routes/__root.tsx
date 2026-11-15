@@ -121,6 +121,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  if (typeof document !== "undefined" && document.getElementById("spa-root")) {
+    return <>{children}</>;
+  }
   return (
     <html lang="en" className="dark">
       <head>

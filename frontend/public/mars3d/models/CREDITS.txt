@@ -1,0 +1,4 @@
+astronaut.glb — mannequin + animations from "Universal Animation Library" by Quaternius (quaternius.com), CC0 1.0.
+perseverance.glb — Mars 2020 Perseverance rover 3D model, NASA/JPL-Caltech (science.nasa.gov/3d-resources). Public domain (NASA media).
+ingenuity.glb — Ingenuity Mars Helicopter 3D model, NASA/JPL-Caltech (science.nasa.gov/3d-resources). Public domain (NASA media).
+ingenuity-flights.json — Ingenuity airfields and headings from NASA/JPL MMGIS (m20_heli_waypoints.json).

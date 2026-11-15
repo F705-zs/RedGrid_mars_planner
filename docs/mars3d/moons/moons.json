@@ -1,0 +1,52 @@
+{
+ "generated": "2026-10-30T13:42:38.609Z",
+ "frame": "Mars body-fixed: east longitude 0–360°, planetocentric latitude. Each orbit sample = the point on Mars directly under the moon + centre-to-centre distance.",
+ "orbits": {
+  "start": "2026-10-29T00:00:00.000Z",
+  "end": "2027-12-03T00:00:00.000Z",
+  "moons": [
+   {
+    "name": "phobos",
+    "stepMinutes": 30,
+    "count": 19201,
+    "distanceBaseKm": 9000,
+    "offset": 0
+   },
+   {
+    "name": "deimos",
+    "stepMinutes": 60,
+    "count": 9601,
+    "distanceBaseKm": 23000,
+    "offset": 115206
+   }
+  ],
+  "encoding": "uint16 triplets: lon = v/65536·360, lat = int16(v)/100, distance km = base + v/10"
+ },
+ "phobos": {
+  "shape": {
+   "cols": 361,
+   "rows": 181,
+   "radius": 11100,
+   "min": -2930,
+   "max": 2917,
+   "encoding": "int16 metres added to radius; row 0 = lat 90°, col 0 = lon −180°, 1° steps"
+  },
+  "photo": {
+   "sourcePixels": [
+    14400,
+    7200
+   ],
+   "mapping": "simple cylindrical, lon −180° at the left edge, east-positive"
+  },
+  "albedo": 0.071
+ },
+ "deimos": {
+  "radiusKm": 6.2,
+  "albedo": 0.068
+ },
+ "credits": [
+  "Phobos shape: Mars Express HRSC Instrument Team / Europlanet — Phobos HRSC DEM Global 100 m (Willner et al. 2010, doi:10.1016/j.epsl.2009.07.033), USGS Astrogeology",
+  "Phobos photo: P. Stooke — Phobos Viking Global Mosaic 5 m, DLR-controlled (Wählisch et al. 2010), USGS Astrogeology",
+  "Orbits: NASA/JPL Horizons (Solar System Dynamics Group)"
+ ]
+}

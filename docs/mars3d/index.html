@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mars — Descent</title>
+    <!-- Linked here (not imported from JS) so the page never paints unstyled while the scripts load -->
+    <style>html{background:#050307}</style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Loaded without blocking first paint: the intro shows immediately and the fonts swap in -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <script type="module" crossorigin src="./assets/index-CaBn2YJZ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-6tdfHBZP.css">
+  </head>
+  <body class="loading">
+    <canvas id="scene"></canvas>
+
+    <!-- Atmospheric-entry heat glow + scene-change flash -->
+    <div id="entry-glow"></div>
+    <div id="flash"></div>
+
+    <!-- Loading screen -->
+    <div id="loader">
+      <canvas id="loader-stars"></canvas>
+      <div class="loader-vignette"></div>
+
+      <!-- Corner telemetry -->
+      <div class="lc lc-tl"><span>ARES<b>/</b>DESCENT</span><small>MISSION 07 · FLIGHT SYSTEMS</small></div>
+      <div class="lc lc-tr"><span>18.44°N 77.45°E</span><small>JEZERO CRATER</small></div>
+      <div class="lc lc-bl"><ol id="loader-log"></ol></div>
+      <div class="lc lc-br"><span id="loader-clock">--:--:--</span><small>MISSION ELAPSED TIME</small></div>
+
+      <div class="loader-core">
+        <div class="loader-orbit">
+          <svg class="loader-ring" viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="ring-ticks" cx="100" cy="100" r="96" />
+            <circle class="ring-track" cx="100" cy="100" r="88" />
+            <circle class="ring-fill" id="loader-ring" cx="100" cy="100" r="88" pathLength="100" />
+          </svg>
+          <div class="loader-planet"><div class="loader-planet-map"></div></div>
+          <div class="loader-sat"><i></i></div>
+        </div>
+
+        <h1 class="loader-title" aria-label="Mars">
+          <span>M</span><span>A</span><span>R</span><span>S</span>
+        </h1>
+        <p class="loader-sub">A descent to the red planet</p>
+
+        <div class="loader-status">
+          <p class="loader-pct"><span id="loader-pct">000</span><small>%</small></p>
+          <p class="loader-label" id="loader-label">Establishing uplink</p>
+          <button class="loader-go" id="loader-go" type="button">
+            <span>Begin descent</span>
+          </button>
+          <button class="loader-walk" id="loader-walk" type="button">Skip to base · walk on foot &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HUD -->
+    <header class="hud-top">
+      <span class="brand">ARES<b>/</b>DESCENT</span>
+      <span class="hud-stat"><small>PHASE</small><span id="hud-phase">ORBIT</span></span>
+      <span class="hud-stat"><small>ALTITUDE</small><span id="hud-alt">—</span></span>
+      <span class="hud-stat"><small>VELOCITY</small><span id="hud-vel">—</span></span>
+    </header>
+    <nav class="hud-rail" id="hud-rail"></nav>
+    <div class="hud-progress"><div id="hud-progress-bar"></div></div>
+
+    <!-- Story chapters (shown/hidden by scroll progress in main.js) -->
+    <section class="chapter" data-from="0" data-to="0.1">
+      <p class="eyebrow">Fourth planet from the Sun</p>
+      <h1>MARS</h1>
+      <p>Scroll to begin the descent.</p>
+      <p class="arrival" id="arrival"></p>
+      <div class="scroll-cue"><span></span></div>
+    </section>
+    <section class="chapter right" data-from="0.12" data-to="0.24">
+      <p class="eyebrow">01 — Orbit</p>
+      <h2>The Red Planet</h2>
+      <p>
+        Half the size of Earth, with the tallest volcano and deepest canyon in the solar system. Its red colour comes from
+        iron oxide dust covering the surface.
+      </p>
+      <dl>
+        <div><dt>Radius</dt><dd>3,389.5 km</dd></div>
+        <div><dt>Sol</dt><dd>24 h 39 m</dd></div>
+        <div><dt>Gravity</dt><dd>3.72 m/s²</dd></div>
+      </dl>
+    </section>
+    <section class="chapter" data-from="0.27" data-to="0.39">
+      <p class="eyebrow">02 — Approach</p>
+      <h2>Phobos &amp; Deimos</h2>
+      <p>Two tiny moons. Phobos circles Mars three times a day and is slowly spiralling inwards. This is the real one, at
+        its real size, flown past where it is on the day you arrive.</p>
+      <dl>
+        <div><dt>Phobos</dt><dd>27 × 22 × 18 km</dd></div>
+        <div><dt>Orbit</dt><dd>7 h 39 m</dd></div>
+        <div><dt>Distance</dt><dd id="phobos-range">—</dd></div>
+      </dl>
+    </section>
+    <section class="chapter right" data-from="0.41" data-to="0.49">
+      <p class="eyebrow">03 — Entry</p>
+      <h2>Seven minutes of terror</h2>
+      <p>The heat shield hits the thin atmosphere at 20,000 km/h. The landing runs entirely on its own.</p>
+    </section>
+    <section class="chapter" data-from="0.55" data-to="0.66">
+      <p class="eyebrow">04 — Descent</p>
+      <h2>Jezero Crater</h2>
+      <p>An ancient lake bed, 45 km wide. Billions of years ago, a river delta flowed in here.</p>
+    </section>
+    <section class="chapter" data-from="0.72" data-to="0.82">
+      <p class="eyebrow">05 — Surface</p>
+      <h2>Boots on the ground</h2>
+      <p>The rover has been working here for years. Move your mouse to look around.</p>
+    </section>
+    <section class="chapter" data-from="0.88" data-to="1.01">
+      <p class="eyebrow">06 — Outpost</p>
+      <h2>Ares Base One</h2>
+      <p>Pressurised habitats, solar fields and a return vehicle on the pad. Welcome home.</p>
+    </section>
+
+    <!-- On foot: shown after scrolling past the base -->
+    <div class="explore-cue" id="explore-cue">
+      <span>Keep scrolling to step outside</span><i></i>
+    </div>
+    <div id="npc-labels"></div>
+    <!-- Top-centre messages, stacked so they never overlap: route chip, then weather / suit alerts -->
+    <div class="hud-stack" id="hud-stack">
+      <div class="nav-chip" id="nav-chip"><i>&#x2191;</i><small>ROUTE</small><b></b><span></span></div>
+      <div class="wx-alerts" id="wx-alerts" role="status" aria-live="polite"></div>
+    </div>
+    <div class="explore-help" id="explore-help">
+      <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> walk</span>
+      <span><kbd>Shift</kbd> run</span>
+      <span><kbd>Space</kbd> jump</span>
+      <span><kbd>Drag</kbd> look</span>
+      <span class="key-map"><kbd>M</kbd> route map</span>
+      <span><kbd>E</kbd> board / leave rover</span>
+      <span><kbd>T</kbd> time speed</span>
+      <span><kbd>I</kbd> Ingenuity flight</span>
+      <button type="button" id="explore-exit"><kbd>Esc</kbd> back to journey</button>
+    </div>
+
+    <!-- Suit + local weather (on foot) -->
+    <aside class="suit-panel" id="suit-panel" aria-label="Suit and weather">
+      <p class="suit-title"><span>SUIT · JEZERO</span><b data-k="loc">EVA</b></p>
+      <dl>
+        <div><dt>Local time</dt><dd data-k="time">—</dd></div>
+        <div><dt>Clock</dt><dd><button type="button" class="clock-speed" data-k="speed" title="Clock speed (T)">real time</button></dd></div>
+        <div><dt>Season</dt><dd data-k="season">—</dd></div>
+        <div><dt>Earth delay</dt><dd data-k="delay">—</dd></div>
+        <div><dt>Air temp</dt><dd data-k="temp">—</dd></div>
+        <div><dt>Pressure</dt><dd data-k="press">—</dd></div>
+        <div><dt>Wind</dt><dd data-k="wind">—</dd></div>
+        <div><dt>Dust τ</dt><dd data-k="tau">—</dd></div>
+        <div><dt>Visibility</dt><dd data-k="vis">—</dd></div>
+        <div><dt>Base solar</dt><dd data-k="solar">—</dd></div>
+        <div><dt>O₂</dt><dd data-k="o2">—</dd></div>
+        <div><dt>Battery</dt><dd data-k="pwr">—</dd></div>
+        <div><dt>Heart</dt><dd data-k="hr">—</dd></div>
+        <div><dt>Dose today</dt><dd data-k="dose">—</dd></div>
+      </dl>
+    </aside>
+
+    <!-- Mission + radio log (on foot): everything that isn't an alert goes here, not over the view -->
+    <aside class="ops-panel" id="ops-panel" aria-label="Mission and radio">
+      <div class="ops-mission" id="ops-mission"></div>
+      <p class="suit-title"><span>RADIO</span></p>
+      <ol class="ops-log" id="ops-log" aria-live="polite"></ol>
+    </aside>
+    <!-- Dust settling on the helmet visor in a storm (wiped at the base or rover) -->
+    <div class="visor-dust" id="visor-dust" aria-hidden="true"></div>
+
+    <!-- Hand-held navigation device (M) -->
+    <div class="device" id="device" aria-hidden="true">
+      <div class="device-frame">
+        <header class="device-head">
+          <span class="device-brand">ARES<b>/</b>NAV</span>
+          <nav class="device-tabs">
+            <button type="button" data-tab="local">Jezero · Local</button>
+            <button type="button" data-tab="global">Mars · Global</button>
+            <button type="button" data-tab="missions">Missions</button>
+          </nav>
+          <span class="device-clock" id="device-clock"></span>
+        </header>
+        <div class="device-body">
+          <div class="map-wrap">
+            <div class="map-bar">
+              <span>Layers</span>
+              <button type="button" data-layer="slope"><i class="sw-slope"></i>Slope</button>
+              <button type="button" data-layer="rough"><i class="sw-rough"></i>Rough ground</button>
+              <button type="button" data-layer="radio"><i class="sw-radio"></i>Radio shadow</button>
+              <button type="button" data-layer="storm"><i class="sw-storm"></i>Storm</button>
+              <span class="map-zoom">
+                <button type="button" data-zoom="-1" aria-label="Zoom in">+</button>
+                <button type="button" data-zoom="1" aria-label="Zoom out">−</button>
+                <button type="button" data-center aria-label="Centre on me" title="Centre on me (drag the map to look around)">◎</button>
+              </span>
+            </div>
+            <canvas id="device-map"></canvas>
+          </div>
+          <aside class="device-side">
+            <div class="device-routes" id="device-routes"></div>
+            <p class="device-side-title" id="device-side-title"></p>
+            <ol id="device-list"></ol>
+            <div class="device-info" id="device-info"></div>
+          </aside>
+        </div>
+        <footer class="device-foot">
+          <span><kbd>M</kbd> put away</span>
+          <span><kbd>Tab</kbd> switch map</span>
+          <span>Click the map or a waypoint to plan a route</span>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Tall spacer that creates the scroll distance -->
+    <div id="scroll-space"></div>
+
+  </body>
+</html>

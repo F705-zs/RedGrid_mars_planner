@@ -281,6 +281,9 @@ function ViewportRaster({
     return { bbox: { west, south, east, north }, px: Math.max(size.x, size.y) * frac };
   };
   const [view, setView] = useState(compute);
+  const [useStaticFallback, setUseStaticFallback] = useState(
+    () => typeof window !== "undefined" && window.location.hostname.endsWith("github.io"),
+  );
   const timer = useRef<number | undefined>(undefined);
   useMapEvents({
     moveend: () => {
@@ -289,9 +292,29 @@ function ViewportRaster({
     },
   });
   useEffect(() => () => window.clearTimeout(timer.current), []);
-  useEffect(() => report.current?.(layerKey, "loading"), [layerKey, view]);
+  useEffect(() => report.current?.(layerKey, "loading"), [layerKey, view, useStaticFallback]);
   if (!view) return null;
   const { bbox, px } = view;
+  const baseUrl = import.meta.env.BASE_URL ?? "/";
+  const staticUrl = `${baseUrl.endsWith("/") ? baseUrl : baseUrl + "/"}rasters/${layerKey}.png`;
+  if (useStaticFallback) {
+    return (
+      <ImageOverlay
+        key={`${layerKey}-static`}
+        url={staticUrl}
+        bounds={L.latLngBounds(
+          toLatLng([region.bboxWest, region.bboxSouth]),
+          toLatLng([region.bboxEast, region.bboxNorth]),
+        )}
+        opacity={opacity}
+        interactive={false}
+        eventHandlers={{
+          load: () => report.current?.(layerKey, "ok"),
+          error: () => report.current?.(layerKey, "unavailable"),
+        }}
+      />
+    );
+  }
   return (
     <ImageOverlay
       key={`${layerKey}-${bbox.west}-${bbox.south}-${bbox.east}-${bbox.north}`}
@@ -301,7 +324,7 @@ function ViewportRaster({
       interactive={false}
       eventHandlers={{
         load: () => report.current?.(layerKey, "ok"),
-        error: () => report.current?.(layerKey, "unavailable"),
+        error: () => setUseStaticFallback(true),
       }}
     />
   );

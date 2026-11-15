@@ -2,7 +2,7 @@
 
 const env = import.meta.env as Record<string, string | undefined>;
 
-/** Base URL of the RedGrid REST API (RedGrid API Contract). */
+/** Base URL of the RedGrid REST API (API Contract V6). */
 export const API_BASE_URL: string = (
   env["VITE_API_BASE_URL"] || "http://localhost:5000/api"
 ).replace(/\/$/, "");
@@ -31,8 +31,9 @@ export const MARS_BASE_ATTRIBUTION = "NASA Mars Trek · Viking MDIM 2.1 (NASA/JP
  */
 export const IMAGERY_FALLBACK_LAYERS = ["imagery_hirise", "imagery_ctx"] as const;
 
-/** URL of the merged 3D Jezero walk (built into public/mars3d by `bun run build:3d`). */
-export const MARS3D_URL: string = env["VITE_MARS3D_URL"] || "/mars3d/index.html";
+/** URL of the merged 3D Jezero walk (built into public/mars3d). */
+const baseUrl = (env["BASE_URL"] || "/").replace(/\/?$/, "/");
+export const MARS3D_URL: string = env["VITE_MARS3D_URL"] || `${baseUrl}mars3d/index.html`;
 
 /** Shown on every page (required wording: human mobility, oxygen, battery, not official NASA EVA limits). */
 export const PROTOTYPE_NOTICE =

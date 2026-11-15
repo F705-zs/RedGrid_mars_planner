@@ -31,7 +31,7 @@ export function Mars3DView({
   useEffect(() => {
     if (!opened || available !== null) return;
     fetch(MARS3D_URL, { method: "GET" })
-      .then((r) => setAvailable(r.ok && (r.headers.get("content-type") ?? "").includes("html")))
+      .then((r) => setAvailable(r.ok))
       .catch(() => setAvailable(false));
   }, [opened, available]);
 

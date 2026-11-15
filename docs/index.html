@@ -1,139 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RedGrid — Integrated Martian Mission-Planning Map & 3D EVA Simulator</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --crimson: #c1121f;
-      --orange: #ff7a3d;
-      --cream: #fdf0d5;
-      --prussian: #003049;
-      --air: #669bbc;
-      --teal: #2ec4b6;
-      --bg: #040d16;
-      --card: rgba(8, 36, 56, 0.90);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--cream);
-      font-family: 'IBM Plex Sans', system-ui, sans-serif;
-      line-height: 1.55;
-      background-image:
-        radial-gradient(ellipse at 80% 10%, rgba(255, 122, 61, 0.14), transparent 50%),
-        linear-gradient(to right, rgba(193, 18, 31, 0.07) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(193, 18, 31, 0.07) 1px, transparent 1px);
-      background-size: 100% 100%, 56px 56px, 56px 56px;
-    }
-    .container { max-width: 1240px; margin: 0 auto; padding: 36px 24px 72px; }
-    .topbar {
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-      gap: 12px; padding: 12px 18px; background: rgba(5, 22, 36, 0.9);
-      border: 1px solid rgba(102, 155, 188, 0.35); border-left: 5px solid var(--orange);
-      border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    }
-    .hero {
-      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 32px;
-      align-items: center; margin-top: 32px;
-    }
-    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
-    h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(44px, 5vw, 64px); line-height: 1.02; }
-    h1 .red { color: var(--crimson); }
-    .sub { font-size: 20px; color: var(--orange); font-style: italic; margin-top: 8px; }
-    .lead { font-size: 16px; color: var(--cream); margin-top: 14px; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 22px; border-radius: 10px; font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700; font-size: 15px; text-decoration: none; transition: transform 0.15s ease;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: var(--crimson); color: var(--cream); border: 1px solid var(--orange); }
-    .btn-orange { background: var(--orange); color: #040d16; }
-    .btn-outline { background: rgba(8, 36, 56, 0.9); color: var(--cream); border: 1px solid var(--air); }
-
-    .card {
-      background: var(--card); border: 1px solid rgba(102, 155, 188, 0.35);
-      border-radius: 14px; padding: 22px 24px; margin-top: 28px;
-    }
-    .card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; color: #fff; margin-bottom: 12px; }
-    .demo-img { width: 100%; border-radius: 12px; border: 1px solid var(--air); display: block; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; margin-top: 16px; }
-    .box {
-      background: rgba(5, 22, 36, 0.85); border: 1px solid rgba(102, 155, 188, 0.3);
-      border-top: 4px solid var(--crimson); border-radius: 10px; padding: 16px 18px;
-    }
-    .box.o { border-top-color: var(--orange); }
-    .box.t { border-top-color: var(--teal); }
-    .box h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; color: #fff; margin: 4px 0 8px; }
-    .kicker { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 0.1em; }
-    code.formula {
-      display: block; margin-top: 10px; padding: 8px 10px; background: #02080e;
-      border: 1px solid rgba(255, 122, 61, 0.4); border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--cream);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="topbar">
-      <span>NASA SPACE APPS CHALLENGE 2026 · TRIPOLI · CHALLENGE: INTERPLANETARY SURVIVAL GUIDE: MARTIAN MAP</span>
-      <span>TEAM: JINAN ARBAS · INAAM METLEJ · OUSSAMA HAMMOUD · FATIMA SABBAGH</span>
-    </div>
-
-    <section class="hero">
-      <div>
-        <h1><span class="red">Red</span>Grid</h1>
-        <div class="sub">Plan a walk on Mars before anyone takes it.</div>
-        <p class="lead">
-          An integrated Martian mission-planning map and first-person <strong>3D Mars surface simulator</strong> for
-          <strong>Jezero Crater (18.44°N, 77.45°E)</strong> — combining 10+ NASA &amp; USGS datasets onto one co-registered
-          <strong>8.0 m grid (4,744,570 routable cells)</strong> under a strict Apollo oxygen walkback envelope.
-        </p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="./slides/index.html">&#9654; Open Interactive 5-Slide Judge Deck</a>
-          <a class="btn btn-orange" href="./mars3d/index.html">&#128640; Launch Live 3D Mars Descent &amp; Surface Walk</a>
-          <a class="btn btn-outline" href="./slides/RedGrid_NASA_SpaceApps_2026_5Slides.pptx" download>&#11015; Download PowerPoint (.pptx)</a>
-        </div>
-      </div>
-      <div>
-        <img class="demo-img" src="./assets/demo_real_jezero_routes.png" alt="Real Jezero 8m DEM + 4 Calculated Routes" />
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Our Three Core Hypotheses (Scientific, Mathematical &amp; Programmatic)</h2>
-      <div class="grid-3">
-        <div class="box">
-          <div class="kicker">1. SCIENTIFIC HYPOTHESIS</div>
-          <h3>Moon Humans + Mars Rovers Transfer</h3>
-          <p>Zero humans have walked on Mars. We learn <strong>human step choices &amp; metabolic O₂ rates</strong> from Apollo 11–17 moonwalks and <strong>Martian surface penalties</strong> from Perseverance &amp; Curiosity drives, bounded by an Apollo walkback safety envelope.</p>
-          <code class="formula">O2_rate = 0.08 kg/h * (W / 285W)</code>
-        </div>
-        <div class="box o">
-          <div class="kicker">2. MATHEMATICAL HYPOTHESIS</div>
-          <h3>Conditional Logit + Weighted Product</h3>
-          <p>Category weights <strong>w = exp(-B)</strong> are learned from 5,495 real step-choice strata (1 chosen step vs. 15 alternatives) and combined via a dimension-free <strong>Weighted Product Model</strong> while &gt;15° slopes stay &infin;-cost blocks.</p>
-          <code class="formula">cost(i) = t_base(theta_i) * Prod_g F_g(i)^(7*w_g)</code>
-        </div>
-        <div class="box t">
-          <div class="kicker">3. PROGRAMMATIC HYPOTHESIS</div>
-          <h3>Puzzle-Piece Provider Architecture</h3>
-          <p>Every data store and AI model implements a runtime-verified interface (<code>CostProviderI</code>, <code>PriorityResolverI</code>, <code>ResourceProviderI</code>), hot-swapping local math for HTTP ML microservices with automatic safe fallback.</p>
-          <code class="formula">registry.verify() -> Local Algorithm | HTTP ML</code>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Puzzle-Piece Architecture &amp; Core Mathematical Formulas</h2>
-      <img class="demo-img" src="./assets/demo_puzzle_and_formulas.png" alt="Puzzle-Piece Architecture and Core Mathematical Formulas" />
-    </section>
-  </div>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RedGrid — Mars EVA Route & Mission Planner</title>
+    <meta name="description" content="Multi-Factor Mars EVA Traverse Planning & Spatial Decision Support for Jezero Crater." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <script type="module" crossorigin src="/RedGrid_mars_planner/assets/index-CJjSKqMT.js"></script>
+  </head>
+  <body>
+    <div id="spa-root"></div>
+  </body>
 </html>
