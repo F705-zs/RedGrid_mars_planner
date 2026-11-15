@@ -1,0 +1,602 @@
+/*
+ * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
+ * - Keep every @import in this top block, above @theme and the rest of the file. Install an
+ *   npm package before @importing its CSS. Never @import a remote URL (web fonts, CDN CSS): the
+ *   build resolves @import from the filesystem. Load those with a <link> in the head() of
+ *   src/routes/__root.tsx and name the family in a --font-* token in @theme inline below.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import "leaflet/dist/leaflet.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * RedGrid design system — dark scientific / mission-control.
+ * Palette (source hex in comments) is defined once here as oklch tokens.
+ */
+
+@theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* RedGrid-specific tokens */
+  --color-panel: var(--panel);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-mars: var(--mars);
+  --color-mars-foreground: var(--mars-foreground);
+  --color-sand: var(--sand);
+  --color-sand-foreground: var(--sand-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-status-draft: var(--status-draft);
+  --color-status-planned: var(--status-planned);
+  --color-status-finalized: var(--status-finalized);
+  --color-risk-low: var(--risk-low);
+  --color-risk-moderate: var(--risk-moderate);
+  --color-risk-high: var(--risk-high);
+  --color-risk-critical: var(--risk-critical);
+  --color-route-safest: var(--route-safest);
+  --color-route-shortest: var(--route-shortest);
+  --color-route-science: var(--route-science);
+  --color-route-mission: var(--route-mission);
+  --color-map-hazard: var(--map-hazard);
+  --color-map-science: var(--map-science);
+  --color-map-safe: var(--map-safe);
+  --color-map-comms: var(--map-comms);
+  --color-map-rover: var(--map-rover);
+  --color-map-terrain: var(--map-terrain);
+  --color-map-rim: var(--map-rim);
+  --color-map-ellipse: var(--map-ellipse);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* ---- Brand palette (the five approved colours; use the semantic tokens below in components) ---- */
+  --brand-maroon: #780000;
+  --brand-crimson: #c1121f;
+  --brand-cream: #fdf0d5;
+  --brand-prussian: #003049;
+  --brand-air: #669bbc;
+
+  /* ---- Semantic tokens derived from the palette ---- */
+  --background: color-mix(in oklab, var(--brand-prussian) 62%, black); /* deepest surface, behind the map */
+  --foreground: var(--brand-cream);
+  --panel: var(--brand-prussian); /* navigation, sidebars, panels */
+  --surface: color-mix(in oklab, var(--brand-prussian) 86%, var(--brand-air));
+  --surface-raised: color-mix(in oklab, var(--brand-prussian) 76%, var(--brand-air));
+  /* Accent for icons, selection and active states: a lighter crimson so it stays readable on Prussian blue
+     (pure crimson is about 2.2:1 there). Pure crimson is kept for filled primary buttons. */
+  --mars: color-mix(in oklab, var(--brand-crimson) 72%, white);
+  --mars-foreground: var(--brand-cream);
+  /* Secondary / interactive accent */
+  --sand: var(--brand-air);
+  --sand-foreground: var(--brand-prussian);
+
+  --card: var(--panel);
+  --card-foreground: var(--foreground);
+  --popover: var(--panel);
+  --popover-foreground: var(--foreground);
+  --primary: var(--brand-crimson);
+  --primary-foreground: var(--brand-cream);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface);
+  --muted-foreground: color-mix(in oklab, var(--brand-cream) 72%, var(--brand-prussian));
+  --accent: var(--surface-raised);
+  --accent-foreground: var(--foreground);
+  --destructive: color-mix(in oklab, var(--brand-crimson) 70%, white);
+  --destructive-foreground: var(--brand-cream);
+  --border: color-mix(in oklab, var(--brand-prussian) 72%, var(--brand-air));
+  --input: color-mix(in oklab, var(--brand-prussian) 68%, var(--brand-air));
+  --ring: var(--brand-air);
+
+  /* Functional colours stay distinguishable (not forced onto the palette) */
+  --success: oklch(0.74 0.13 160);
+  --warning: oklch(0.84 0.14 80);
+  --info: var(--brand-air);
+
+  --status-draft: var(--muted-foreground);
+  --status-planned: var(--brand-air);
+  --status-finalized: oklch(0.74 0.13 160);
+
+  --chart-1: var(--mars);
+  --chart-2: var(--brand-air);
+  --chart-3: var(--brand-cream);
+  --chart-4: oklch(0.84 0.14 80);
+  --chart-5: oklch(0.74 0.13 160);
+
+  --sidebar: var(--panel);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--brand-crimson);
+  --sidebar-primary-foreground: var(--brand-cream);
+  --sidebar-accent: var(--surface);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--brand-air);
+
+  --shadow-panel: 0 6px 18px -12px oklch(0 0 0 / 60%);
+
+  /* Risk levels (always paired with a text label) */
+  --risk-low: oklch(0.74 0.14 155);
+  --risk-moderate: oklch(0.86 0.15 95);
+  --risk-high: oklch(0.74 0.16 55);
+  --risk-critical: oklch(0.64 0.21 25);
+
+  /* Route alternatives (always paired with a letter code) */
+  --route-safest: oklch(0.8 0.11 215);
+  --route-shortest: oklch(0.87 0.14 95);
+  --route-science: oklch(0.8 0.16 145);
+  --route-mission: oklch(0.66 0.17 35);
+
+  /* Map feature types */
+  --map-hazard: oklch(0.64 0.21 25);
+  --map-science: oklch(0.76 0.17 150);
+  --map-safe: oklch(0.7 0.13 245);
+  --map-comms: oklch(0.68 0.17 305);
+  --map-rover: oklch(0.97 0.005 260);
+  --map-terrain: oklch(0.756 0.096 71.7);
+  --map-rim: oklch(0.78 0.15 45);
+  --map-ellipse: oklch(0.9 0.02 90);
+  --map-grid: oklch(1 0 0 / 7%);
+  --map-grid-strong: oklch(1 0 0 / 14%);
+  --map-label-shadow: oklch(0.12 0.015 264 / 90%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--brand-crimson) 45%, transparent);
+  }
+
+  /* Visible keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Reusable surfaces */
+@utility panel {
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--muted-foreground);
+}
+
+@utility data-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility grid-backdrop {
+  background-image:
+    linear-gradient(oklch(1 0 0 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 3%) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ---------- Leaflet theming ---------- */
+.leaflet-container {
+  background: var(--background);
+  font-family: var(--font-sans);
+}
+.leaflet-container.rg-map--pick {
+  cursor: crosshair;
+}
+.leaflet-bar {
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+.leaflet-bar a,
+.leaflet-control-zoom a {
+  background: var(--panel) !important;
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+}
+.leaflet-bar a:hover {
+  background: var(--surface) !important;
+}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+  background: color-mix(in oklab, var(--panel) 85%, transparent) !important;
+  color: var(--muted-foreground) !important;
+  border-color: var(--muted-foreground) !important;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--panel);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-panel);
+}
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-md);
+}
+.leaflet-popup-content {
+  margin: 10px 12px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--muted-foreground);
+}
+.rg-popup-title {
+  font-weight: 600;
+}
+.rg-popup-meta {
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+/* Grid background (no base tiles configured) */
+.rg-grid {
+  stroke: var(--map-grid);
+  stroke-width: 1;
+  fill: none;
+}
+.rg-grid--major {
+  stroke: var(--map-grid-strong);
+}
+.rg-bbox {
+  stroke: var(--sand);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 6;
+  fill: none;
+  stroke-opacity: 0.6;
+}
+.rg-grid-label span {
+  position: absolute;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted-foreground);
+  text-shadow: 0 0 4px var(--map-label-shadow);
+  pointer-events: none;
+}
+.rg-grid-label--lon span {
+  transform: translate(4px, 4px);
+}
+.rg-grid-label--lat span {
+  transform: translate(4px, -14px);
+}
+
+/* Map pins (divIcons). Colour is always paired with a glyph. */
+.rg-pin {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 2px solid var(--background);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--background);
+  box-shadow: 0 0 0 1px var(--map-label-shadow);
+}
+.rg-pin--hazard {
+  background: var(--map-hazard);
+  border-radius: 3px;
+  transform: rotate(45deg);
+}
+.rg-pin--hazard > b {
+  transform: rotate(-45deg);
+}
+.rg-pin--science {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--map-science);
+  filter: drop-shadow(0 0 2px var(--map-label-shadow));
+}
+.rg-pin--science svg {
+  height: 100%;
+  width: 100%;
+  fill: var(--map-science);
+  stroke: var(--background);
+  stroke-width: 1.5;
+}
+.rg-pin--safe {
+  background: var(--map-safe);
+}
+.rg-pin--comms {
+  background: var(--map-comms);
+}
+.rg-pin--start {
+  background: var(--mars);
+  color: var(--mars-foreground);
+  border-color: var(--foreground);
+}
+.rg-pin--destination {
+  background: var(--panel);
+  color: var(--foreground);
+  border-color: var(--mars);
+}
+.rg-pin--stop {
+  background: var(--map-science);
+  border-radius: 6px;
+}
+.rg-pin--warning {
+  background: var(--map-hazard);
+  border-radius: 6px;
+}
+.rg-pin--draft {
+  background: transparent;
+  border: 2px dashed var(--foreground);
+}
+.rg-pin--probe {
+  background: color-mix(in oklab, var(--mars) 25%, transparent);
+  border: 2px solid var(--mars);
+  box-shadow: 0 0 0 3px var(--map-label-shadow);
+}
+.rg-pin--probe::after {
+  content: "";
+  height: 4px;
+  width: 4px;
+  border-radius: 9999px;
+  background: var(--mars);
+}
+.rg-pin--route {
+  border-radius: 4px;
+  font-size: 10px;
+}
+.rg-pin--route.is-infeasible {
+  background: var(--panel) !important;
+  color: var(--foreground);
+  border-style: dashed;
+}
+.rg-tag {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 3px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  border-radius: 4px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+/* Vector features */
+.rg-feature--rover {
+  stroke: var(--map-rover);
+  stroke-width: 2;
+  stroke-dasharray: 2 5;
+  stroke-linecap: round;
+  fill: none;
+}
+.rg-feature--terrain {
+  stroke: var(--map-terrain);
+  stroke-width: 1;
+  fill: var(--map-terrain);
+  fill-opacity: 0.12;
+}
+.rg-feature--radiation {
+  stroke: var(--map-radiation);
+  stroke-width: 1.5;
+  fill: url(#rg-hazard-stripes);
+  fill-opacity: 1;
+}
+.rg-stripe-bg {
+  fill: color-mix(in oklab, var(--map-radiation) 14%, transparent);
+}
+.rg-stripe-line {
+  stroke: var(--map-radiation);
+  stroke-opacity: 0.55;
+}
+.rg-warning-area {
+  stroke: var(--map-hazard);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+  fill: var(--map-hazard);
+  fill-opacity: 0.12;
+}
+.rg-warning-area--draft {
+  stroke: var(--foreground);
+  fill: var(--foreground);
+  fill-opacity: 0.08;
+}
+
+/* Routes */
+.rg-route {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke-opacity 120ms ease;
+}
+.rg-route--halo {
+  stroke: var(--background);
+  stroke-width: 8;
+  stroke-opacity: 0.85;
+}
+.rg-route--SAFEST { stroke: var(--route-safest); }
+.rg-route--SHORTEST { stroke: var(--route-shortest); }
+.rg-route--SCIENCE_FOCUSED { stroke: var(--route-science); }
+.rg-route--MISSION_PRIORITY { stroke: var(--route-mission); }
+.rg-route--infeasible {
+  stroke-dasharray: 8 7;
+}
+.rg-route.is-highlighted {
+  stroke-width: 6;
+}
+.rg-route.is-dimmed {
+  stroke-opacity: 0.3;
+}
+.rg-swatch--SAFEST { background: var(--route-safest); }
+.rg-swatch--SHORTEST { background: var(--route-shortest); }
+.rg-swatch--SCIENCE_FOCUSED { background: var(--route-science); }
+.rg-swatch--MISSION_PRIORITY { background: var(--route-mission); }
+
+/* App shell */
+.app-shell {
+  height: 100dvh;
+}
+
+/* ---------- Print ---------- */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+@media print {
+  :root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.2 0.01 260);
+    --panel: oklch(1 0 0);
+    --surface: oklch(0.97 0 0);
+    --surface-raised: oklch(0.95 0 0);
+    --muted-foreground: oklch(0.45 0.01 260);
+    --border: oklch(0.85 0.005 260);
+    --sand: oklch(0.5 0.1 60);
+    --mars: oklch(0.5 0.16 33);
+    --shadow-panel: none;
+  }
+  html,
+  body {
+    background: var(--background) !important;
+    font-size: 11px;
+  }
+  .app-shell {
+    height: auto;
+  }
+  .app-shell main {
+    overflow: visible !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-tight {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+}
+
+/* Legend swatches (match the map styling) */
+
+.rg-legend-radiation-unused {
+  border: 1px solid var(--map-radiation);
+  background: repeating-linear-gradient(
+    45deg,
+    color-mix(in oklab, var(--map-radiation) 55%, transparent) 0 3px,
+    color-mix(in oklab, var(--map-radiation) 12%, transparent) 3px 6px
+  );
+}
+.rg-legend-rover {
+  border-top: 2px dotted var(--map-rover);
+}
+
+/* V6 feature types */
+.rg-feature--rim {
+  stroke: var(--map-rim);
+  stroke-width: 2;
+  stroke-dasharray: 2 4;
+  stroke-linecap: round;
+  fill: none;
+}
+.rg-feature--ellipse {
+  stroke: var(--map-ellipse);
+  stroke-width: 1.5;
+  stroke-dasharray: 8 6;
+  fill: none;
+}
+.rg-legend-rim {
+  border-top: 2px dotted var(--map-rim);
+}
+.rg-legend-ellipse {
+  border: 1.5px dashed var(--map-ellipse);
+}
+/* V6 routable area: where routes can be calculated (the region box is drawn separately) */
+.rg-routable {
+  stroke: var(--brand-air);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+  fill: var(--brand-air);
+  fill-opacity: 0.04;
+}
+/* Temporary astronaut footsteps from the 3D walk (session only) */
+.rg-footsteps {
+  stroke: var(--brand-cream);
+  stroke-width: 2.5;
+  stroke-dasharray: 1 6;
+  stroke-linecap: round;
+  fill: none;
+}

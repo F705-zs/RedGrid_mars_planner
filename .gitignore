@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Node / Frontend
+node_modules/
+.output/
+.nitro/
+.tanstack/
+.wrangler/
+dist/

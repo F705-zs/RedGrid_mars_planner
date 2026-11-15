@@ -1,0 +1,10 @@
+{
+  "startSol": 1830,
+  "endSol": 1859,
+  "startUtc": "2026-04-13T11:25:11Z",
+  "endUtc": "2026-05-14T07:12:26Z",
+  "solarLongitudeStart": 263.4,
+  "solarLongitudeEnd": 282.5,
+  "source": "NASA PDS Atmospheres Node - Mars 2020 MEDA Bundle (urn:nasa:pds:mars2020_meda), Sols 1830-1859",
+  "dataState": "HISTORICAL_OBSERVATION"
+}

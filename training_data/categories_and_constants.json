@@ -1,0 +1,999 @@
+{
+  "categories": [
+    {
+      "key": "slope_0_5",
+      "display_name": "Slope 0-5 deg",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "slope",
+      "rule": "0 <= slope < 5 deg",
+      "is_reference": 1,
+      "bit": 0
+    },
+    {
+      "key": "slope_5_10",
+      "display_name": "Slope 5-10 deg",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "slope",
+      "rule": "5 <= slope < 10 deg",
+      "is_reference": 0,
+      "bit": 1
+    },
+    {
+      "key": "slope_10_15",
+      "display_name": "Slope 10-15 deg",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "slope",
+      "rule": "10 <= slope < 15 deg",
+      "is_reference": 0,
+      "bit": 2
+    },
+    {
+      "key": "slope_15_20",
+      "display_name": "Slope 15-20 deg",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "slope",
+      "rule": "15 <= slope <= max_slope_deg (steeper is blocked)",
+      "is_reference": 0,
+      "bit": 3
+    },
+    {
+      "key": "rough_low",
+      "display_name": "Smooth ground",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "roughness",
+      "rule": "roughness < rough_smooth_max_m",
+      "is_reference": 1,
+      "bit": 4
+    },
+    {
+      "key": "rough_medium",
+      "display_name": "Medium roughness",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "roughness",
+      "rule": "rough_smooth_max_m <= roughness < rough_high_min_m",
+      "is_reference": 0,
+      "bit": 5
+    },
+    {
+      "key": "rough_high",
+      "display_name": "Rough ground",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "roughness",
+      "rule": "roughness >= rough_high_min_m",
+      "is_reference": 0,
+      "bit": 6
+    },
+    {
+      "key": "terrain_regolith",
+      "display_name": "Regolith / soil",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "terrain_class",
+      "rule": "terrain class = REGOLITH",
+      "is_reference": 1,
+      "bit": 7
+    },
+    {
+      "key": "terrain_bedrock",
+      "display_name": "Bedrock",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "terrain_class",
+      "rule": "terrain class = BEDROCK",
+      "is_reference": 0,
+      "bit": 8
+    },
+    {
+      "key": "terrain_sand",
+      "display_name": "Sand / ripples",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "terrain_class",
+      "rule": "terrain class = SAND",
+      "is_reference": 0,
+      "bit": 9
+    },
+    {
+      "key": "terrain_boulder",
+      "display_name": "Boulder field",
+      "category_group": "TERRAIN",
+      "scope": "SHARED",
+      "layer_key": "terrain_class",
+      "rule": "terrain class = BOULDER_FIELD",
+      "is_reference": 0,
+      "bit": 10
+    },
+    {
+      "key": "near_rover_path",
+      "display_name": "On known rover path",
+      "category_group": "ROVER_PATH",
+      "scope": "FIXED",
+      "layer_key": "rover_path",
+      "rule": "distance to traverse < rover_path_buffer_m",
+      "is_reference": 0,
+      "bit": 11
+    },
+    {
+      "key": "near_rim_scarp",
+      "display_name": "Near crater rim or scarp",
+      "category_group": "HAZARD",
+      "scope": "SHARED",
+      "layer_key": "rim_scarps",
+      "rule": "distance to rim or scarp line < rim_buffer_m",
+      "is_reference": 0,
+      "bit": 12
+    },
+    {
+      "key": "hazard_0_50",
+      "display_name": "Hazard within 50 m",
+      "category_group": "HAZARD",
+      "scope": "SHARED",
+      "layer_key": "hazards",
+      "rule": "outside hazard polygon, distance < hazard_near_m (inside is blocked)",
+      "is_reference": 0,
+      "bit": 13
+    },
+    {
+      "key": "hazard_50_200",
+      "display_name": "Hazard 50-200 m",
+      "category_group": "HAZARD",
+      "scope": "SHARED",
+      "layer_key": "hazards",
+      "rule": "hazard_near_m <= distance < hazard_far_m",
+      "is_reference": 0,
+      "bit": 14
+    },
+    {
+      "key": "near_science",
+      "display_name": "Near science target",
+      "category_group": "SCIENCE",
+      "scope": "HUMAN_ONLY",
+      "layer_key": "science_targets",
+      "rule": "distance to a science target < science_buffer_m",
+      "is_reference": 0,
+      "bit": 15
+    },
+    {
+      "key": "no_comm",
+      "display_name": "No communication coverage",
+      "category_group": "COMMUNICATION",
+      "scope": "FIXED",
+      "layer_key": "comm_coverage",
+      "rule": "no line of sight to any communication asset",
+      "is_reference": 0,
+      "bit": 16
+    },
+    {
+      "key": "data_missing",
+      "display_name": "Data missing",
+      "category_group": "UNCERTAINTY",
+      "scope": "FIXED",
+      "layer_key": "*",
+      "rule": "slope, roughness, terrain_class or hazards has no value (cannot occur inside the routable area; kept for training and wider coverage)",
+      "is_reference": 0,
+      "bit": 17
+    }
+  ],
+  "handSetWeightsV0": [
+    {
+      "model_id": 1,
+      "category_key": "data_missing",
+      "coefficient": null,
+      "weight": 5.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "hazard_0_50",
+      "coefficient": null,
+      "weight": 4.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "hazard_50_200",
+      "coefficient": null,
+      "weight": 1.5,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "near_rim_scarp",
+      "coefficient": null,
+      "weight": 2.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "near_rover_path",
+      "coefficient": null,
+      "weight": 0.9,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "near_science",
+      "coefficient": null,
+      "weight": 0.6,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "no_comm",
+      "coefficient": null,
+      "weight": 1.5,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "rough_high",
+      "coefficient": null,
+      "weight": 2.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "rough_low",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "REFERENCE"
+    },
+    {
+      "model_id": 1,
+      "category_key": "rough_medium",
+      "coefficient": null,
+      "weight": 1.3,
+      "probability": null,
+      "std_error": null,
+      "basis": "PLACEHOLDER"
+    },
+    {
+      "model_id": 1,
+      "category_key": "slope_0_5",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "REFERENCE"
+    },
+    {
+      "model_id": 1,
+      "category_key": "slope_10_15",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PHYSICS_IN_BASE"
+    },
+    {
+      "model_id": 1,
+      "category_key": "slope_15_20",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PHYSICS_IN_BASE"
+    },
+    {
+      "model_id": 1,
+      "category_key": "slope_5_10",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PHYSICS_IN_BASE"
+    },
+    {
+      "model_id": 1,
+      "category_key": "terrain_bedrock",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PHYSICS_IN_BASE"
+    },
+    {
+      "model_id": 1,
+      "category_key": "terrain_boulder",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PHYSICS_IN_BASE"
+    },
+    {
+      "model_id": 1,
+      "category_key": "terrain_regolith",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "REFERENCE"
+    },
+    {
+      "model_id": 1,
+      "category_key": "terrain_sand",
+      "coefficient": null,
+      "weight": 1.0,
+      "probability": null,
+      "std_error": null,
+      "basis": "PHYSICS_IN_BASE"
+    }
+  ],
+  "planningConstants": {
+    "comm_receiver_height_m": {
+      "key": "comm_receiver_height_m",
+      "value": 2.0,
+      "unit": "m",
+      "description": "Height of the suit antenna above ground for line of sight",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "corridor_margin_fraction": {
+      "key": "corridor_margin_fraction",
+      "value": 0.5,
+      "unit": "",
+      "description": "Corridor margin as a share of the start-destination distance",
+      "source": "Team decision",
+      "data_state": "DERIVED"
+    },
+    "corridor_max_expansions": {
+      "key": "corridor_max_expansions",
+      "value": 2.0,
+      "unit": "",
+      "description": "Times the corridor is widened when a route touches its edge",
+      "source": "Team decision",
+      "data_state": "DERIVED"
+    },
+    "corridor_min_margin_m": {
+      "key": "corridor_min_margin_m",
+      "value": 1000.0,
+      "unit": "m",
+      "description": "Smallest corridor margin",
+      "source": "Team decision",
+      "data_state": "DERIVED"
+    },
+    "default_battery_wh": {
+      "key": "default_battery_wh",
+      "value": 800.0,
+      "unit": "Wh",
+      "description": "Default usable suit battery",
+      "source": "Placeholder - replace with a sourced value",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "default_oxygen_kg": {
+      "key": "default_oxygen_kg",
+      "value": 0.6,
+      "unit": "kg",
+      "description": "Default usable oxygen per crew member",
+      "source": "Placeholder - replace with a sourced value",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "default_reserve_fraction": {
+      "key": "default_reserve_fraction",
+      "value": 0.2,
+      "unit": "",
+      "description": "Share of oxygen and battery that must never be used",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "default_suit_power_w": {
+      "key": "default_suit_power_w",
+      "value": 90.0,
+      "unit": "W",
+      "description": "Default suit power draw",
+      "source": "Placeholder - replace with a sourced value",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "geology_offset_m": {
+      "key": "geology_offset_m",
+      "value": 200.0,
+      "unit": "m",
+      "description": "Largest stated offset of the SIM 3464 map; squares closer than this to a terrain-class boundary count as uncertain in dataConfidence",
+      "source": "SIM 3464 metadata (Sun and Stack, 2020): random offsets of about 100-200 m",
+      "data_state": "HISTORICAL_OBSERVATION"
+    },
+    "grid_cell_m": {
+      "key": "grid_cell_m",
+      "value": 8.0,
+      "unit": "m",
+      "description": "Size of one routing grid square",
+      "source": "Team decision: matches the 3D walking grid; HiRISE DTM resampled from 1 m",
+      "data_state": "DERIVED"
+    },
+    "hazard_far_m": {
+      "key": "hazard_far_m",
+      "value": 200.0,
+      "unit": "m",
+      "description": "Outer edge of the hazard_50_200 band",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "hazard_min_area_m2": {
+      "key": "hazard_min_area_m2",
+      "value": 192.0,
+      "unit": "m2",
+      "description": "Smallest hazard polygon kept (3 grid squares)",
+      "source": "Team decision",
+      "data_state": "DERIVED"
+    },
+    "hazard_near_m": {
+      "key": "hazard_near_m",
+      "value": 50.0,
+      "unit": "m",
+      "description": "Outer edge of the hazard_0_50 band",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "hazard_roughness_m": {
+      "key": "hazard_roughness_m",
+      "value": 1.0,
+      "unit": "m",
+      "description": "Roughness at or above this marks hazard ground (hazard polygons)",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "max_slope_deg": {
+      "key": "max_slope_deg",
+      "value": 20.0,
+      "unit": "deg",
+      "description": "Squares steeper than this are blocked",
+      "source": "Prototype assumption; justification in RedGrid System Specification, section How routes are chosen",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "metabolic_rate_w": {
+      "key": "metabolic_rate_w",
+      "value": 300.0,
+      "unit": "W",
+      "description": "Work rate used for walking: Apollo 14 EVA average on the Moon (1/6 g), assumed for Mars; no gravity correction",
+      "source": "Apollo 14 PLSS report: about 265-310 W measured",
+      "data_state": "HISTORICAL_OBSERVATION"
+    },
+    "oxygen_density_g_per_l": {
+      "key": "oxygen_density_g_per_l",
+      "value": 1.429,
+      "unit": "g/L",
+      "description": "Density of oxygen",
+      "source": "Physical constant",
+      "data_state": "MODELLED_CONDITION"
+    },
+    "oxygen_energy_j_per_l": {
+      "key": "oxygen_energy_j_per_l",
+      "value": 20100.0,
+      "unit": "J/L",
+      "description": "Energy released per litre of oxygen used",
+      "source": "Standard indirect calorimetry value",
+      "data_state": "MODELLED_CONDITION"
+    },
+    "provider_timeout_s": {
+      "key": "provider_timeout_s",
+      "value": 30.0,
+      "unit": "s",
+      "description": "Time a remote provider has to answer before the next provider is used",
+      "source": "Team decision",
+      "data_state": "DERIVED"
+    },
+    "rim_buffer_m": {
+      "key": "rim_buffer_m",
+      "value": 30.0,
+      "unit": "m",
+      "description": "Distance to a rim or scarp line counted as near",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "risk_margin_high_fraction": {
+      "key": "risk_margin_high_fraction",
+      "value": 0.1,
+      "unit": "",
+      "description": "Route risk is HIGH when the smaller remaining share of usable oxygen or battery is below this",
+      "source": "Team policy (prototype)",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "risk_margin_moderate_fraction": {
+      "key": "risk_margin_moderate_fraction",
+      "value": 0.25,
+      "unit": "",
+      "description": "Route risk is at least MODERATE, and limitingResource is named, when the smaller remaining share is below this",
+      "source": "Team policy (prototype)",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "rough_high_min_m": {
+      "key": "rough_high_min_m",
+      "value": 0.5,
+      "unit": "m",
+      "description": "At or above this roughness a square is rough (2 x DTM vertical precision)",
+      "source": "Placeholder until the DTM precision is read from the product documentation",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "rough_smooth_max_m": {
+      "key": "rough_smooth_max_m",
+      "value": 0.25,
+      "unit": "m",
+      "description": "Below this roughness a square is smooth (1 x DTM vertical precision)",
+      "source": "Placeholder until the DTM precision is read from the product documentation",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "rover_path_buffer_m": {
+      "key": "rover_path_buffer_m",
+      "value": 10.0,
+      "unit": "m",
+      "description": "Distance to the rover traverse counted as on the path",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "scarp_min_length_m": {
+      "key": "scarp_min_length_m",
+      "value": 50.0,
+      "unit": "m",
+      "description": "Shortest rim or scarp line kept",
+      "source": "Team decision",
+      "data_state": "DERIVED"
+    },
+    "scarp_slope_deg": {
+      "key": "scarp_slope_deg",
+      "value": 25.0,
+      "unit": "deg",
+      "description": "Slope at or above this marks a rim or scarp edge",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "science_buffer_m": {
+      "key": "science_buffer_m",
+      "value": 100.0,
+      "unit": "m",
+      "description": "Distance to a science target counted as near",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "science_value_core_site": {
+      "key": "science_value_core_site",
+      "value": 1.0,
+      "unit": "",
+      "description": "Science value of a rock-core sample site",
+      "source": "Team rule: sites NASA chose for sampling",
+      "data_state": "DERIVED"
+    },
+    "science_value_other_site": {
+      "key": "science_value_other_site",
+      "value": 0.5,
+      "unit": "",
+      "description": "Science value of other sample-related sites (regolith, atmosphere, witness tubes, depot)",
+      "source": "Team rule",
+      "data_state": "DERIVED"
+    },
+    "terrain_factor_bedrock": {
+      "key": "terrain_factor_bedrock",
+      "value": 0.91,
+      "unit": "",
+      "description": "Walking energy on bedrock relative to regolith",
+      "source": "Pandolf / Soule-Goldman: blacktop 1.0 / dirt road 1.1 (Earth, unsuited)",
+      "data_state": "MODELLED_CONDITION"
+    },
+    "terrain_factor_boulder": {
+      "key": "terrain_factor_boulder",
+      "value": 1.91,
+      "unit": "",
+      "description": "Walking energy in a boulder field relative to regolith",
+      "source": "PLACEHOLDER: no published coefficient; set to the highest known factor (sand) so it is never treated as easy",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "terrain_factor_regolith": {
+      "key": "terrain_factor_regolith",
+      "value": 1.0,
+      "unit": "",
+      "description": "Walking energy on regolith relative to regolith",
+      "source": "Reference surface (Apollo work rate measured on regolith)",
+      "data_state": "MODELLED_CONDITION"
+    },
+    "terrain_factor_sand": {
+      "key": "terrain_factor_sand",
+      "value": 1.91,
+      "unit": "",
+      "description": "Walking energy on loose sand relative to regolith",
+      "source": "Pandolf / Soule-Goldman: loose sand 2.1 / dirt road 1.1 (Earth, unsuited)",
+      "data_state": "MODELLED_CONDITION"
+    },
+    "ti_bedrock_min": {
+      "key": "ti_bedrock_min",
+      "value": 600.0,
+      "unit": "J m-2 K-1 s-1/2",
+      "description": "Regolith with thermal inertia above this becomes bedrock",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "ti_sand_max": {
+      "key": "ti_sand_max",
+      "value": 200.0,
+      "unit": "J m-2 K-1 s-1/2",
+      "description": "Regolith with thermal inertia below this becomes sand",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    },
+    "walk_speed_flat_kmh": {
+      "key": "walk_speed_flat_kmh",
+      "value": 3.0,
+      "unit": "km/h",
+      "description": "Suited walking speed on flat ground (Tobler curve scaled)",
+      "source": "Prototype assumption",
+      "data_state": "DEMONSTRATION_DATA"
+    }
+  },
+  "terrainClassMapping": [
+    {
+      "unit_symbol": "Aeb",
+      "unit_name": "Eolian bedform unit",
+      "terrain_class": "SAND",
+      "dataset_id": 5,
+      "reason": "Wind-blown ripples and dunes"
+    },
+    {
+      "unit_symbol": "CR",
+      "unit_name": "Crater riim unit",
+      "terrain_class": "BOULDER_FIELD",
+      "dataset_id": 5,
+      "reason": "Jezero's own rim; name spelled as published"
+    },
+    {
+      "unit_symbol": "Hnpf",
+      "unit_name": "Nili Planum fan unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Fan deposits"
+    },
+    {
+      "unit_symbol": "NHjf1",
+      "unit_name": "Jezero fan 1 unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Layered delta rock"
+    },
+    {
+      "unit_symbol": "NHjf2",
+      "unit_name": "Jezero fan 2 unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Layered delta rock"
+    },
+    {
+      "unit_symbol": "Njf",
+      "unit_name": "Jezero floor unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Rock floor with thin cover"
+    },
+    {
+      "unit_symbol": "Nle",
+      "unit_name": "Lower etched unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Eroded, exposed rock"
+    },
+    {
+      "unit_symbol": "Nnp1",
+      "unit_name": "Nili Planum 1 unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Plains rock unit"
+    },
+    {
+      "unit_symbol": "Nnp2",
+      "unit_name": "Nili Planum 2 unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Plains rock unit"
+    },
+    {
+      "unit_symbol": "Nrb",
+      "unit_name": "Rugged bright unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Rugged rock exposures"
+    },
+    {
+      "unit_symbol": "Nue",
+      "unit_name": "Upper etched unit",
+      "terrain_class": "BEDROCK",
+      "dataset_id": 5,
+      "reason": "Eroded, exposed rock"
+    },
+    {
+      "unit_symbol": "ce",
+      "unit_name": "Crater ejecta unit",
+      "terrain_class": "BOULDER_FIELD",
+      "dataset_id": 5,
+      "reason": "Blocky ejecta"
+    },
+    {
+      "unit_symbol": "ci",
+      "unit_name": "Crater interior unit",
+      "terrain_class": "REGOLITH",
+      "dataset_id": 5,
+      "reason": "Infilled crater floors"
+    },
+    {
+      "unit_symbol": "cr",
+      "unit_name": "Crater rim unit",
+      "terrain_class": "BOULDER_FIELD",
+      "dataset_id": 5,
+      "reason": "Blocky rim material"
+    },
+    {
+      "unit_symbol": "su",
+      "unit_name": "Smooth unit, undivided",
+      "terrain_class": "REGOLITH",
+      "dataset_id": 5,
+      "reason": "Smooth, mantled surface"
+    }
+  ],
+  "routeProfiles": [
+    {
+      "key": "SAFEST",
+      "display_name": "Safest",
+      "distance_weight": 0.0
+    },
+    {
+      "key": "SHORTEST",
+      "display_name": "Shortest",
+      "distance_weight": 1.0
+    },
+    {
+      "key": "SCIENCE_FOCUSED",
+      "display_name": "Science-focused",
+      "distance_weight": 0.0
+    },
+    {
+      "key": "MISSION_PRIORITY",
+      "display_name": "Mission priority",
+      "distance_weight": null
+    }
+  ],
+  "profileRules": [
+    {
+      "route_type": "SAFEST",
+      "category_group": "HAZARD",
+      "scale": 2.0,
+      "max_factor": 50.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SAFEST",
+      "category_group": "TERRAIN",
+      "scale": 1.5,
+      "max_factor": 20.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SAFEST",
+      "category_group": "SCIENCE",
+      "scale": 0.5,
+      "max_factor": 2.0,
+      "max_vs_hazard": 0.5
+    },
+    {
+      "route_type": "SAFEST",
+      "category_group": "COMMUNICATION",
+      "scale": 1.5,
+      "max_factor": 10.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SAFEST",
+      "category_group": "UNCERTAINTY",
+      "scale": 1.5,
+      "max_factor": 50.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SHORTEST",
+      "category_group": "HAZARD",
+      "scale": 0.5,
+      "max_factor": 50.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SHORTEST",
+      "category_group": "TERRAIN",
+      "scale": 0.3,
+      "max_factor": 20.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SHORTEST",
+      "category_group": "SCIENCE",
+      "scale": 0.0,
+      "max_factor": 1.0,
+      "max_vs_hazard": 1.0
+    },
+    {
+      "route_type": "SHORTEST",
+      "category_group": "COMMUNICATION",
+      "scale": 0.0,
+      "max_factor": 1.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SHORTEST",
+      "category_group": "UNCERTAINTY",
+      "scale": 1.0,
+      "max_factor": 50.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SCIENCE_FOCUSED",
+      "category_group": "HAZARD",
+      "scale": 1.0,
+      "max_factor": 50.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SCIENCE_FOCUSED",
+      "category_group": "TERRAIN",
+      "scale": 1.0,
+      "max_factor": 20.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SCIENCE_FOCUSED",
+      "category_group": "SCIENCE",
+      "scale": 2.0,
+      "max_factor": 10.0,
+      "max_vs_hazard": 1.0
+    },
+    {
+      "route_type": "SCIENCE_FOCUSED",
+      "category_group": "COMMUNICATION",
+      "scale": 1.0,
+      "max_factor": 10.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SCIENCE_FOCUSED",
+      "category_group": "UNCERTAINTY",
+      "scale": 1.0,
+      "max_factor": 50.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "MISSION_PRIORITY",
+      "category_group": "HAZARD",
+      "scale": null,
+      "max_factor": 50.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "MISSION_PRIORITY",
+      "category_group": "TERRAIN",
+      "scale": null,
+      "max_factor": 20.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "MISSION_PRIORITY",
+      "category_group": "SCIENCE",
+      "scale": null,
+      "max_factor": 10.0,
+      "max_vs_hazard": 1.0
+    },
+    {
+      "route_type": "MISSION_PRIORITY",
+      "category_group": "COMMUNICATION",
+      "scale": null,
+      "max_factor": 10.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "MISSION_PRIORITY",
+      "category_group": "UNCERTAINTY",
+      "scale": null,
+      "max_factor": 50.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SAFEST",
+      "category_group": "ROVER_PATH",
+      "scale": 1.0,
+      "max_factor": 2.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SHORTEST",
+      "category_group": "ROVER_PATH",
+      "scale": 0.0,
+      "max_factor": 1.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "SCIENCE_FOCUSED",
+      "category_group": "ROVER_PATH",
+      "scale": 1.0,
+      "max_factor": 2.0,
+      "max_vs_hazard": null
+    },
+    {
+      "route_type": "MISSION_PRIORITY",
+      "category_group": "ROVER_PATH",
+      "scale": null,
+      "max_factor": 2.0,
+      "max_vs_hazard": null
+    }
+  ],
+  "priorityPresets": [
+    {
+      "key": "BALANCED",
+      "display_name": "Balanced",
+      "description": "Every factor counts; none dominates",
+      "safety_weight": 0.25,
+      "science_weight": 0.2,
+      "distance_weight": 0.15,
+      "walking_difficulty_weight": 0.15,
+      "return_weight": 0.15,
+      "environment_weight": 0.05,
+      "rover_path_weight": 0.05,
+      "basis": "PLACEHOLDER (AHP pending)"
+    },
+    {
+      "key": "SAFETY_FOCUSED",
+      "display_name": "Safety first",
+      "description": "Stay far from hazards and rough ground",
+      "safety_weight": 0.45,
+      "science_weight": 0.2,
+      "distance_weight": 0.1,
+      "walking_difficulty_weight": 0.1,
+      "return_weight": 0.1,
+      "environment_weight": 0.03,
+      "rover_path_weight": 0.02,
+      "basis": "PLACEHOLDER (AHP pending)"
+    },
+    {
+      "key": "SCIENCE_FOCUSED",
+      "display_name": "Science first",
+      "description": "Pass as many science targets as is safe",
+      "safety_weight": 0.2,
+      "science_weight": 0.45,
+      "distance_weight": 0.05,
+      "walking_difficulty_weight": 0.1,
+      "return_weight": 0.1,
+      "environment_weight": 0.05,
+      "rover_path_weight": 0.05,
+      "basis": "PLACEHOLDER (AHP pending)"
+    },
+    {
+      "key": "SHORTEST",
+      "display_name": "Shortest",
+      "description": "Least distance within the hard limits",
+      "safety_weight": 0.15,
+      "science_weight": 0.05,
+      "distance_weight": 0.5,
+      "walking_difficulty_weight": 0.1,
+      "return_weight": 0.1,
+      "environment_weight": 0.05,
+      "rover_path_weight": 0.05,
+      "basis": "PLACEHOLDER (AHP pending)"
+    }
+  ]
+}

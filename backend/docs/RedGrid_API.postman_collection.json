@@ -1,0 +1,1265 @@
+{
+ "info": {
+  "name": "RedGrid API",
+  "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+  "description": "Every RedGrid endpoint with example bodies. Run the backend (flask --app redgrid run, or waitress), then run 'Missions > Create mission' first: it saves {{missionId}} for the other requests. Valid points in the demo data: longitude 77.33-77.50, latitude 18.40-18.51."
+ },
+ "variable": [
+  {
+   "key": "baseUrl",
+   "value": "http://localhost:5000/api"
+  },
+  {
+   "key": "missionId",
+   "value": "1"
+  },
+  {
+   "key": "routeId",
+   "value": "1"
+  },
+  {
+   "key": "annotationId",
+   "value": "1"
+  }
+ ],
+ "item": [
+  {
+   "name": "1. Catalog",
+   "item": [
+    {
+     "name": "Health",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/health",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "health"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Regions",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Region 1 (with routable area)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Layers",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/layers",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "layers"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Layer GeoJSON: hazards",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/layers/hazards/geojson",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "layers",
+        "hazards",
+        "geojson"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Layer GeoJSON: rover path",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/layers/rover_path/geojson",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "layers",
+        "rover_path",
+        "geojson"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Datasets",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/datasets",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "datasets"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Route profiles",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/route-profiles",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "route-profiles"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Priority presets",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/priority-presets",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "priority-presets"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Categories",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/categories",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "categories"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Terrain-class mapping",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/terrain-class-mapping",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "terrain-class-mapping"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Active weight model",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/cost-model",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "cost-model"
+       ]
+      }
+     }
+    },
+    {
+     "name": "All weight models",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/cost-models",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "cost-models"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Weight model 1",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/cost-models/1",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "cost-models",
+        "1"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Planning constants",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/planning-constants",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "planning-constants"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Demo window",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/demo-window",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "demo-window"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Providers",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/providers",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "providers"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "2. Location and terrain",
+   "item": [
+    {
+     "name": "Click a point (landing site)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/location?lon=77.4509&lat=18.4446",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "location"
+       ],
+       "query": [
+        {
+         "key": "lon",
+         "value": "77.4509"
+        },
+        {
+         "key": "lat",
+         "value": "18.4446"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Terrain grid for 3D",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/terrain?west=77.40&south=18.42&east=77.48&north=18.48&maxSize=128",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "terrain"
+       ],
+       "query": [
+        {
+         "key": "west",
+         "value": "77.40"
+        },
+        {
+         "key": "south",
+         "value": "18.42"
+        },
+        {
+         "key": "east",
+         "value": "77.48"
+        },
+        {
+         "key": "north",
+         "value": "18.48"
+        },
+        {
+         "key": "maxSize",
+         "value": "128"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Texture: terrain class (PNG)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/terrain/texture?west=77.40&south=18.42&east=77.48&north=18.48&size=512&layer=terrain_class",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "terrain",
+        "texture"
+       ],
+       "query": [
+        {
+         "key": "west",
+         "value": "77.40"
+        },
+        {
+         "key": "south",
+         "value": "18.42"
+        },
+        {
+         "key": "east",
+         "value": "77.48"
+        },
+        {
+         "key": "north",
+         "value": "18.48"
+        },
+        {
+         "key": "size",
+         "value": "512"
+        },
+        {
+         "key": "layer",
+         "value": "terrain_class"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Texture: slope (PNG)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/terrain/texture?west=77.40&south=18.42&east=77.48&north=18.48&size=512&layer=slope",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "terrain",
+        "texture"
+       ],
+       "query": [
+        {
+         "key": "west",
+         "value": "77.40"
+        },
+        {
+         "key": "south",
+         "value": "18.42"
+        },
+        {
+         "key": "east",
+         "value": "77.48"
+        },
+        {
+         "key": "north",
+         "value": "18.48"
+        },
+        {
+         "key": "size",
+         "value": "512"
+        },
+        {
+         "key": "layer",
+         "value": "slope"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Texture: comm coverage (PNG)",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/terrain/texture?west=77.40&south=18.42&east=77.48&north=18.48&size=512&layer=comm_coverage",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "terrain",
+        "texture"
+       ],
+       "query": [
+        {
+         "key": "west",
+         "value": "77.40"
+        },
+        {
+         "key": "south",
+         "value": "18.42"
+        },
+        {
+         "key": "east",
+         "value": "77.48"
+        },
+        {
+         "key": "north",
+         "value": "18.48"
+        },
+        {
+         "key": "size",
+         "value": "512"
+        },
+        {
+         "key": "layer",
+         "value": "comm_coverage"
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "3. Missions",
+   "item": [
+    {
+     "name": "Create mission (CUSTOM mix) - run first",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"regionId\": 1,\n  \"name\": \"Delta walk\",\n  \"objective\": \"Reach the delta front\",\n  \"startLon\": 77.4509,\n  \"startLat\": 18.4446,\n  \"destLon\": 77.3833,\n  \"destLat\": 18.4699,\n  \"profile\": \"CUSTOM\",\n  \"priorityMix\": [\n    {\n      \"presetKey\": \"BALANCED\",\n      \"percent\": 60\n    },\n    {\n      \"presetKey\": \"SCIENCE_FOCUSED\",\n      \"percent\": 40\n    }\n  ],\n  \"reserveFraction\": 0.2,\n  \"startIsBase\": true,\n  \"resources\": {\n    \"oxygenKg\": 0.6,\n    \"batteryWh\": 800\n  }\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('201 Created', () => pm.response.to.have.status(201));",
+         "pm.collectionVariables.set('missionId', pm.response.json().id);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Create mission (preset)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"regionId\": 1,\n  \"name\": \"Safe walk\",\n  \"objective\": \"Reach the delta front\",\n  \"startLon\": 77.4509,\n  \"startLat\": 18.4446,\n  \"destLon\": 77.3833,\n  \"destLat\": 18.4699,\n  \"profile\": \"SAFETY_FOCUSED\",\n  \"reserveFraction\": 0.2,\n  \"startIsBase\": true,\n  \"resources\": {\n    \"oxygenKg\": 0.6,\n    \"batteryWh\": 800\n  }\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "List missions",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ]
+      }
+     }
+    },
+    {
+     "name": "List DRAFT missions",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions?status=DRAFT",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ],
+       "query": [
+        {
+         "key": "status",
+         "value": "DRAFT"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "name": "Get mission",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Update mission",
+     "request": {
+      "method": "PATCH",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"name\": \"Delta walk v2\",\n  \"reserveFraction\": 0.25\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "Duplicate mission",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/duplicate",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "duplicate"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Status -> PLANNED",
+     "request": {
+      "method": "PATCH",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/status",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "status"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"status\": \"PLANNED\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "Status -> DRAFT",
+     "request": {
+      "method": "PATCH",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/status",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "status"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"status\": \"DRAFT\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "4. Annotations and resources",
+   "item": [
+    {
+     "name": "Add science stop",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/annotations",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "annotations"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"kind\": \"SCIENCE_STOP\",\n  \"lon\": 77.435,\n  \"lat\": 18.433,\n  \"durationMin\": 30,\n  \"note\": \"Sample the outcrop\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.collectionVariables.set('annotationId', pm.response.json().id);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Add hazard warning",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/annotations",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "annotations"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"kind\": \"HAZARD_WARNING\",\n  \"lon\": 77.42,\n  \"lat\": 18.455,\n  \"severity\": \"HIGH\",\n  \"radiusM\": 150,\n  \"note\": \"Loose slope\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "List annotations",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/annotations",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "annotations"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Delete annotation",
+     "request": {
+      "method": "DELETE",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/annotations/{{annotationId}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "annotations",
+        "{{annotationId}}"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Get resources",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/resources",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "resources"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Set resources",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/resources",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "resources"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"oxygenKg\": 0.7,\n  \"batteryWh\": 900,\n  \"reserveFraction\": 0.2\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "5. Routes and report",
+   "item": [
+    {
+     "name": "Calculate routes (takes a few seconds)",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/routes",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "routes"
+       ]
+      }
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('4 routes', () => pm.expect(pm.response.json().length).to.eql(4));",
+         "pm.collectionVariables.set('routeId', pm.response.json()[3].id);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Get routes",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/routes",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "routes"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Select route",
+     "request": {
+      "method": "PUT",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/selected-route",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "selected-route"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"routeId\": {{routeId}}\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "Recalculate",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/routes/recalculate",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "routes",
+        "recalculate"
+       ]
+      }
+     }
+    },
+    {
+     "name": "Report",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/{{missionId}}/report",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "{{missionId}}",
+        "report"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "6. Errors on purpose",
+   "item": [
+    {
+     "name": "OUT_OF_COVERAGE",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"regionId\": 1,\n  \"name\": \"Delta walk\",\n  \"objective\": \"Reach the delta front\",\n  \"startLon\": 77.4509,\n  \"startLat\": 18.4446,\n  \"destLon\": 77.25,\n  \"destLat\": 18.25,\n  \"profile\": \"CUSTOM\",\n  \"priorityMix\": [\n    {\n      \"presetKey\": \"BALANCED\",\n      \"percent\": 60\n    },\n    {\n      \"presetKey\": \"SCIENCE_FOCUSED\",\n      \"percent\": 40\n    }\n  ],\n  \"reserveFraction\": 0.2,\n  \"startIsBase\": true,\n  \"resources\": {\n    \"oxygenKg\": 0.6,\n    \"batteryWh\": 800\n  }\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "OUT_OF_REGION",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"regionId\": 1,\n  \"name\": \"Delta walk\",\n  \"objective\": \"Reach the delta front\",\n  \"startLon\": 77.4509,\n  \"startLat\": 18.4446,\n  \"destLon\": 78.0,\n  \"destLat\": 18.4699,\n  \"profile\": \"CUSTOM\",\n  \"priorityMix\": [\n    {\n      \"presetKey\": \"BALANCED\",\n      \"percent\": 60\n    },\n    {\n      \"presetKey\": \"SCIENCE_FOCUSED\",\n      \"percent\": 40\n    }\n  ],\n  \"reserveFraction\": 0.2,\n  \"startIsBase\": true,\n  \"resources\": {\n    \"oxygenKg\": 0.6,\n    \"batteryWh\": 800\n  }\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "INVALID_PROFILE (mix sums to 90)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"regionId\": 1,\n  \"name\": \"Delta walk\",\n  \"objective\": \"Reach the delta front\",\n  \"startLon\": 77.4509,\n  \"startLat\": 18.4446,\n  \"destLon\": 77.3833,\n  \"destLat\": 18.4699,\n  \"profile\": \"CUSTOM\",\n  \"priorityMix\": [\n    {\n      \"presetKey\": \"BALANCED\",\n      \"percent\": 50\n    },\n    {\n      \"presetKey\": \"SHORTEST\",\n      \"percent\": 40\n    }\n  ],\n  \"reserveFraction\": 0.2,\n  \"startIsBase\": true,\n  \"resources\": {\n    \"oxygenKg\": 0.6,\n    \"batteryWh\": 800\n  }\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "VALIDATION_ERROR (empty name)",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"regionId\": 1,\n  \"name\": \"\",\n  \"objective\": \"Reach the delta front\",\n  \"startLon\": 77.4509,\n  \"startLat\": 18.4446,\n  \"destLon\": 77.3833,\n  \"destLat\": 18.4699,\n  \"profile\": \"CUSTOM\",\n  \"priorityMix\": [\n    {\n      \"presetKey\": \"BALANCED\",\n      \"percent\": 60\n    },\n    {\n      \"presetKey\": \"SCIENCE_FOCUSED\",\n      \"percent\": 40\n    }\n  ],\n  \"reserveFraction\": 0.2,\n  \"startIsBase\": true,\n  \"resources\": {\n    \"oxygenKg\": 0.6,\n    \"batteryWh\": 800\n  }\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "Infeasible: too little oxygen",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Content-Type",
+        "value": "application/json"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/missions",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n  \"regionId\": 1,\n  \"name\": \"Low O2\",\n  \"objective\": \"Reach the delta front\",\n  \"startLon\": 77.4509,\n  \"startLat\": 18.4446,\n  \"destLon\": 77.3833,\n  \"destLat\": 18.4699,\n  \"profile\": \"CUSTOM\",\n  \"priorityMix\": [\n    {\n      \"presetKey\": \"BALANCED\",\n      \"percent\": 60\n    },\n    {\n      \"presetKey\": \"SCIENCE_FOCUSED\",\n      \"percent\": 40\n    }\n  ],\n  \"reserveFraction\": 0.2,\n  \"startIsBase\": true,\n  \"resources\": {\n    \"oxygenKg\": 0.1\n  }\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      },
+      "description": "Creates the mission; then run 'Calculate routes': every route comes back feasible=false, CRITICAL."
+     },
+     "event": [
+      {
+       "listen": "test",
+       "script": {
+        "type": "text/javascript",
+        "exec": [
+         "pm.test('201 Created', () => pm.response.to.have.status(201));",
+         "pm.collectionVariables.set('missionId', pm.response.json().id);"
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "MISSION_NOT_FOUND",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/missions/99999",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "missions",
+        "99999"
+       ]
+      }
+     }
+    },
+    {
+     "name": "LAYER_NOT_VECTOR",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/regions/1/layers/slope/geojson",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "regions",
+        "1",
+        "layers",
+        "slope",
+        "geojson"
+       ]
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

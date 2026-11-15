@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.env
+# Note: instance/redgrid.sqlite3 and data/jezero/ are intentionally tracked
+# so the repository runs out-of-the-box for NASA Space Apps judges.
