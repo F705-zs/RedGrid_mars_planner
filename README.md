@@ -10,9 +10,9 @@
 
 Once GitHub Pages is enabled on `/docs` (`main` branch), the following public links work immediately with **no sign-in required**:
 
-- **Live Project Portal & Interactive Route Showcase:** `./` (`https://<your-username>.github.io/<your-repo>/`)
-- **Interactive 5-Slide Judge Presentation (3D Theme):** `./slides/index.html` (`https://<your-username>.github.io/<your-repo>/slides/`)
-- **Live Playable 3D Mars Descent & Surface Walk (`ARES/DESCENT`):** `./mars3d/index.html` (`https://<your-username>.github.io/<your-repo>/mars3d/`)
+- **Live Project Portal & Interactive Route Showcase:** `./` (`https://F705-zs.github.io/RedGrid_mars_planner/`)
+- **Interactive 5-Slide Judge Presentation (3D Theme):** `./slides/index.html` (`https://F705-zs.github.io/RedGrid_mars_planner/slides/`)
+- **Live Playable 3D Mars Descent & Surface Walk (`ARES/DESCENT`):** `./mars3d/index.html` (`https://F705-zs.github.io/RedGrid_mars_planner/mars3d/`)
 - **Downloadable PowerPoint Deck (`.pptx`):** [`docs/slides/RedGrid_NASA_SpaceApps_2026_5Slides.pptx`](docs/slides/RedGrid_NASA_SpaceApps_2026_5Slides.pptx)
 
 ![Real Jezero 8.0m DEM + 4 Calculated Routes](docs/assets/demo_real_jezero_routes.png)
