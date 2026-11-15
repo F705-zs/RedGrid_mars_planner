@@ -1,0 +1,57 @@
+{
+  "hirise_dtm": {
+    "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/HiRISE/JEZ_hirise_soc_006_DTM_MOLAtopography_DeltaGeoid_1m_Eqc_latTs0_lon0_blend40.tif",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "hirise_ortho": {
+    "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/HiRISE/JEZ_hirise_soc_006_orthoMosaic_25cm_Eqc_latTs0_lon0_first.tif",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "ctx_dtm": {
+    "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/ScienceInvestigationMaps_JPL/M20_JezeroCrater_CTXDEM_20m.tif",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "ctx_ortho": {
+    "url": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/mars2020_trn/CTX/ScienceInvestigationMaps_JPL/M20_JezeroCrater_CTXortho_mosaic_5m.tif",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "sim3464_geology": {
+    "url": "https://pubs.usgs.gov/sim/3464/sim3464_database.zip",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "themis_ti": {
+    "url": "https://asc-astropedia.s3.us-west-2.amazonaws.com/Mars/Odyssey/THEMIS-Global-Thermal-Inertia-Mosaic/Quantitative-32-Bit/THEMIS_TI_Mosaic_Quant_00N060E_100mpp.cub",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "m20_traverse": {
+    "url": "https://mars.nasa.gov/mmgis-maps/M20/Layers/json/M20_traverse.json",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "meda_env": {
+    "url": "https://pds-atmospheres.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "mars_trek": {
+    "url": "https://trek.nasa.gov/tiles/apidoc/trekAPI.html?body=mars",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "m20_waypoints": {
+    "url": "https://mars.nasa.gov/mmgis-maps/M20/Layers/json/M20_waypoints.json",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  },
+  "apollo_14": {
+    "url": "https://pds.lroc.im-ldi.com/data/LRO-L-LROC-5-RDR-V1.0/LROLRC_2001/EXTRAS/SHAPEFILE/APOLLO_14/APOLLO_14.ZIP",
+    "accessedOn": "2026-11-15",
+    "status": "prepared"
+  }
+}
